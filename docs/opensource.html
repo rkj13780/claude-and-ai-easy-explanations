@@ -43,5 +43,22 @@
       <h1>Topic Content</h1>
       <p>The author footer card has been removed from this page and is no longer rendered.</p>
     </main>
-  </body>
+  <script>
+(function () {
+  function hideAuthorCard() {
+    document.querySelectorAll("div").forEach(function (el) {
+      var text = el.textContent;
+      if (!text || text.indexOf("AI Engineer") === -1 || text.length > 300) return;
+      var target = el;
+      for (var p = el.parentElement; p && p.textContent.length <= 300; p = p.parentElement) {
+        if (p.className && String(p.className).indexOf("border-t") !== -1) { target = p; break; }
+      }
+      target.style.display = "none";
+    });
+  }
+  hideAuthorCard();
+  new MutationObserver(hideAuthorCard).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+</body>
 </html>
